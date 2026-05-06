@@ -1,0 +1,30 @@
+{
+  "name": "Pinky Promise Nail Club",
+  "short_name": "Pinky Promise",
+  "description": "Gestion profesional de tu nail club.",
+  "start_url": "https://eiderfreile.github.io/PinkyPromise/",
+  "scope": "https://eiderfreile.github.io/PinkyPromise/",
+  "display": "standalone",
+  "background_color": "#1a0a0f",
+  "theme_color": "#1a1209",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://eiderfreile.github.io/PinkyPromise/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://eiderfreile.github.io/PinkyPromise/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": [
+    "productivity",
+    "business",
+    "lifestyle"
+  ]
+}
