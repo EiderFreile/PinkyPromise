@@ -1,0 +1,45 @@
+// service-worker.js — Pinky Promise Nail Club
+const CACHE = 'pinkypromise-v6';
+const ASSETS = ['/PinkyPromise/', '/PinkyPromise/index.html', '/PinkyPromise/manifest.json'];
+
+self.addEventListener('install', e => {
+  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
+  self.skipWaiting();
+});
+
+self.addEventListener('activate', e => {
+  e.waitUntil(caches.keys().then(keys =>
+    Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
+  ));
+  self.clients.claim();
+});
+
+self.addEventListener('fetch', e => {
+  if (
+    e.request.url.includes('firebase') ||
+    e.request.url.includes('googleapis') ||
+    e.request.url.includes('gstatic') ||
+    e.request.url.includes('fonts.') ||
+    e.request.url.includes('cdnjs')
+  ) {
+    return;
+  }
+  e.respondWith(
+    caches.match(e.request).then(cached => cached || fetch(e.request))
+  );
+});
+
+// Notificaciones push en background
+self.addEventListener('push', e => {
+  if (!e.data) return;
+  const data = e.data.json();
+  const { title, body } = data.notification || {};
+  e.waitUntil(
+    self.registration.showNotification(title || 'Pinky Promise', {
+      body: body || '',
+      icon: '/PinkyPromise/icon-192.png',
+      badge: '/PinkyPromise/icon-192.png',
+      vibrate: [200, 100, 200]
+    })
+  );
+});
